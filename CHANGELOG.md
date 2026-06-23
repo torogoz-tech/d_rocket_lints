@@ -17,11 +17,13 @@ The format follows [Keep a Changelog](https://keepachangelog.com).
 - **Discovery**: the `analyzer.plugins: [d_rocket_lints]`
   block in `analysis_options.yaml` replaces the old
   `custom_lint:` block. The two are mutually exclusive.
-- **Rule class names**: the rule classes moved into a
-  `rules/` sub-namespace. If you were importing the
+- **Rule class names**: the rule classes stayed in
+  `src/lints/` (no rename). The typedefs `LinqClosureLint`
+  / `NPlusOneLint` (1.x names) are preserved for
+  source compatibility. If you were importing the
   top-level `linq_closure_lint.dart` or
   `n_plus_one_lint.dart` files (only relevant for plugin
-  host testing), update the import.
+  host testing), no import change is needed.
 
 ### Added
 

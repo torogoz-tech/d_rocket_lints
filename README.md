@@ -19,25 +19,41 @@ dev_dependencies:
 # analysis_options.yaml
 analyzer:
   plugins:
-    d_rocket_lints:
+    - d_rocket_lints
 ```
 
 ## Rules
 
-| Rule | Detects | Fix |
+The two rules are exposed by their diagnostic code
+(`analysis_server_plugin` convention):
+
+| Diagnostic code | Detects | Fix |
 |---|---|---|
-| `LinqClosureRule` | LINQ predicates like `dbSet.where_(b => b.x == 1)` that evaluate **in-memory only** (silent correctness footgun — works locally, returns wrong data against SQL Server / Postgres / etc.) | Wrap the closure in `Expr.lambda(...)` so the provider can translate it to SQL. `dart fix` applies the change automatically. |
-| `NPlusOneRule` | `for (final r in dbSet.where_(...))` followed by a navigation access (`r.user`) that triggers a per-row fetch. | Use `include_<Target>()` (the codegen helper) to do a single `IN (...)` query. |
+| `d_rocket_untranslated_closure_linq` | LINQ predicates like `dbSet.where((b) => b.x == 1)` that evaluate **in-memory only** (silent correctness footgun — works locally, returns wrong data against SQL Server / Postgres / etc.) | Wrap the closure in `Expr.lambda(...)` so the provider can translate it to SQL. `dart fix` applies the change automatically. |
+| `d_rocket_n_plus_one` | `for (final r in dbSet.where_(...))` followed by a navigation access (`r.user`) that triggers a per-row fetch. | Use `include_<Target>()` (the codegen helper) to do a single `IN (...)` query. |
+
+The class names `LinqClosureRule` and `NPlusOneRule` (and the
+1.x typedefs `LinqClosureLint` / `NPlusOneLint`) are still
+importable from `package:d_rocket_lints/d_rocket_lints.dart`
+for source compatibility with the 1.x `custom_lint_builder`
+API.
 
 ## Disabling a rule
 
+Use an `// ignore: <code>` directive on the offending line,
+or disable the rule globally with `analyzer.errors:`:
+
+```dart
+// ignore: d_rocket_untranslated_closure_linq
+db.users.where((b) => b.name == 'alice').toList();
+```
+
 ```yaml
-# analysis_options.yaml
+# analysis_options.yaml — disable the rule entirely
 analyzer:
-  plugins:
-    d_rocket_lints:
-      rules:
-        LinqClosureRule: false
+  errors:
+    d_rocket_untranslated_closure_linq: ignore
+    d_rocket_n_plus_one: ignore
 ```
 
 ## Severity
@@ -49,8 +65,8 @@ can promote them to `error` in their
 ```yaml
 analyzer:
   errors:
-    linq_closure_rule: error
-    n_plus_one_rule: error
+    d_rocket_untranslated_closure_linq: error
+    d_rocket_n_plus_one: error
 ```
 
 ## Tests
