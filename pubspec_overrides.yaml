@@ -1,8 +1,0 @@
-# Local-only overrides for development in the
-# monorepo. NOT included in the published
-# package (pub.dev ignores this file).
-dependency_overrides:
-  d_rocket:
-    path: ../d_rocket
-  d_rocket_engine_sqlite:
-    path: ../d_rocket_engine_sqlite

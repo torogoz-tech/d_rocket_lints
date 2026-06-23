@@ -48,6 +48,7 @@ dependencies:
   # requires meta 1.18.0 which conflicts with
   # d_rocket's flutter SDK pin (meta 1.17.0).
   analyzer: ^10.0.1
+  analyzer_plugin: ^0.14.0
   analysis_server_plugin: ^0.3.7
 
 dev_dependencies:
