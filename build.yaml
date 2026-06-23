@@ -1,0 +1,24 @@
+# 2.0.0 — `analysis_server_plugin` does NOT
+# require a `build.yaml` (unlike `custom_lint`,
+# which used `build.yaml` to declare the rules
+# to enable). The new system is configured
+# entirely in the consumer's
+# `analysis_options.yaml`:
+#
+# ```yaml
+# analyzer:
+#   plugins:
+#     - d_rocket_lints
+# ```
+#
+# The Dart analysis server auto-discovers the
+# plugin by finding the `plugin` top-level
+# variable exported from `lib/main.dart`.
+#
+# This `build.yaml` is kept as an empty stub
+# so existing tooling that scans for the
+# file doesn't fail (e.g. monorepo
+# workspace scripts).
+targets:
+  $default:
+    builders: {}

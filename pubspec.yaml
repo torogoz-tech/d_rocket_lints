@@ -1,0 +1,64 @@
+name: d_rocket_lints
+description: >
+  Analyzer plugin rules for the d_rocket framework: detects
+  closure LINQ calls (which run in-memory only and should
+  be rewritten with Expr.lambda for SQL translation) and
+  N+1 navigation fetches in loops.
+version: 2.0.0
+
+repository: https://github.com/torogoz-tech/d_rocket_lints
+homepage: https://github.com/torogoz-tech/d_rocket_lints
+issue_tracker: https://github.com/torogoz-tech/d_rocket_lints/issues
+documentation: https://github.com/torogoz-tech/d_rocket_lints/blob/main/README.md
+
+topics:
+  - lints
+  - analyzer-plugin
+  - d-rocket
+  - static-analysis
+  - dev-tool
+
+environment:
+  # 3.9+ required by analysis_server_plugin 0.3.x.
+  sdk: ^3.9.0
+
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
+# 2.0.0 — switched from `custom_lint_builder`
+# (archived 2026-03-24, max analyzer 8.0.0)
+# to the official `analysis_server_plugin`
+# (maintained by tools.dart.dev, supports
+# analyzer 9.0.0+). Bumps analyzer ^8.4.0
+# → ^9.0.0. The `dart analyze` command
+# auto-discovers this plugin via the
+# `analyzer.plugins: [d_rocket_lints]`
+# section in the consumer's
+# `analysis_options.yaml`.
+dependencies:
+  d_rocket: ^2.0.0
+  # 2.0.0 — analyzer bumped 9.0.0 → 10.0.1
+  # in lockstep with analysis_server_plugin
+  # 0.3.4 → 0.3.9 (Phase 8.7). analyzer 10.0.2+
+  # requires meta 1.18.0 which conflicts with
+  # d_rocket's flutter SDK pin (meta 1.17.0).
+  analyzer: ^10.0.1
+  analysis_server_plugin: ^0.3.7
+
+dev_dependencies:
+  # 2.0.0 — official testing utilities for
+  # analysis_server_plugin rules. ^0.1.7
+  # pairs with analyzer 10.0.1.
+  analyzer_testing: ^0.1.7
+  # 2.0.0 — `AnalysisRuleTest` extends
+  # `PubPackageResolutionTest`, which uses
+  # the reflective loader to discover
+  # `test_*` methods on the test class.
+  test_reflective_loader: ^0.2.0
+  lints: ^6.0.0
+  test: ^1.30.0

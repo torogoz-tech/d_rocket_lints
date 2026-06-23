@@ -1,0 +1,19 @@
+include: package:lints/recommended.yaml
+
+analyzer:
+  language:
+    strict-casts: true
+    strict-inference: true
+  errors:
+    # Lints need to import from
+    # `package:analyzer` (not part
+    # of the public API), so the
+    # `implementation_imports` rule
+    # from the recommended set is
+    # disabled in this package.
+    implementation_imports: ignore
+
+linter:
+  rules:
+    - prefer_const_constructors
+    - prefer_final_locals
