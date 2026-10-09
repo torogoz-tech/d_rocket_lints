@@ -16,7 +16,7 @@ fetches in loops.
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  d_rocket_lints: ^2.0.0
+  d_rocket_lints: ^2.1.0
 ```
 
 ```yaml

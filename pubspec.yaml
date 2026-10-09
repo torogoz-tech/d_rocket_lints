@@ -4,7 +4,7 @@ description: >
   closure LINQ calls (which run in-memory only and should
   be rewritten with Expr.lambda for SQL translation) and
   N+1 navigation fetches in loops.
-version: 2.0.0
+version: 2.1.0
 
 repository: https://github.com/torogoz-tech/d_rocket_lints
 homepage: https://github.com/torogoz-tech/d_rocket_lints
@@ -41,7 +41,7 @@ platforms:
 # section in the consumer's
 # `analysis_options.yaml`.
 dependencies:
-  d_rocket: ^2.0.0
+  d_rocket: ^2.1.0
   # 2.0.0 — analyzer bumped 9.0.0 → 10.0.1
   # in lockstep with analysis_server_plugin
   # 0.3.4 → 0.3.9 (Phase 8.7). analyzer 10.0.2+
