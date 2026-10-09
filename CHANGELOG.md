@@ -3,6 +3,14 @@
 All notable changes to `d_rocket_lints` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## [2.1.0] — Unreleased
+
+### Compatibility
+
+* Aligned the package with the d_rocket 2.1.0 lockstep release.
+* Retained the `analysis_server_plugin` host and both production rules without
+  changing their diagnostics or fix behavior.
+
 ## [2.0.0] — 2026-06-22
 
 ### Breaking
