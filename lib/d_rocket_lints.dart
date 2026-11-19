@@ -26,9 +26,8 @@
 ///   `dart run custom_lint` step needed.
 /// * Activate via `analysis_options.yaml`:
 ///   ```yaml
-///   analyzer:
-///     plugins:
-///       - d_rocket_lints
+///   plugins:
+///     d_rocket_lints: ^2.2.1
 ///   ```
 ///
 /// ## What stays the same

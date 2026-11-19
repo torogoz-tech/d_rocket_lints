@@ -41,9 +41,8 @@ import 'src/lints/n_plus_one_lint.dart';
 /// their `analysis_options.yaml`:
 ///
 /// ```yaml
-/// analyzer:
-///   plugins:
-///     - d_rocket_lints
+/// plugins:
+///   d_rocket_lints: ^2.2.1
 /// ```
 final DRocketLintsPlugin plugin = DRocketLintsPlugin();
 

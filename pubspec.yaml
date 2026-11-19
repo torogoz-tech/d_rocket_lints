@@ -1,10 +1,6 @@
 name: d_rocket_lints
-description: >
-  Analyzer plugin rules for the d_rocket framework: detects
-  closure LINQ calls (which run in-memory only and should
-  be rewritten with Expr.lambda for SQL translation) and
-  N+1 navigation fetches in loops.
-version: 2.1.0
+description: Static analysis rules for d_rocket that detect untranslated LINQ closures and N+1 navigation fetches before they reach production.
+version: 2.2.1
 
 repository: https://github.com/torogoz-tech/d_rocket_lints
 homepage: https://github.com/torogoz-tech/d_rocket_lints
@@ -36,12 +32,12 @@ platforms:
 # (maintained by tools.dart.dev, supports
 # analyzer 9.0.0+). Bumps analyzer ^8.4.0
 # → ^9.0.0. The `dart analyze` command
-# auto-discovers this plugin via the
-# `analyzer.plugins: [d_rocket_lints]`
+# auto-discovers this plugin via the top-level
+# `plugins: {d_rocket_lints: ^2.2.1}`
 # section in the consumer's
 # `analysis_options.yaml`.
 dependencies:
-  d_rocket: ^2.1.0
+  d_rocket: ^2.2.1
   # 2.0.0 — analyzer bumped 9.0.0 → 10.0.1
   # in lockstep with analysis_server_plugin
   # 0.3.4 → 0.3.9 (Phase 8.7). analyzer 10.0.2+

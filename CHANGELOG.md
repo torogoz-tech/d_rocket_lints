@@ -3,6 +3,15 @@
 All notable changes to `d_rocket_lints` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## [2.2.1] — 2026-11-19
+
+### Fixed
+
+* Corrected the consumer configuration to use the modern top-level `plugins`
+  section required by Dart analyzer plugins.
+* Updated diagnostic suppression examples to use the plugin-qualified codes.
+* Shortened the package description for pub.dev search metadata.
+
 ## [2.1.0] — Unreleased
 
 ### Compatibility
@@ -22,7 +31,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com).
   `^10.0.1`. This is the minimum to be on the same
   analyzer major as `d_rocket_builder` 2.0.0.
 - **SDK floor**: `sdk: ^3.9.0` (was `^3.4.0`).
-- **Discovery**: the `analyzer.plugins: [d_rocket_lints]`
+- **Discovery**: the top-level `plugins: {d_rocket_lints: ...}`
   block in `analysis_options.yaml` replaces the old
   `custom_lint:` block. The two are mutually exclusive.
 - **Rule class names**: the rule classes stayed in
@@ -59,10 +68,9 @@ analyzer:
 ```
 
 ```yaml
-# analysis_options.yaml — 2.0
-analyzer:
-  plugins:
-    d_rocket_lints:
+# analysis_options.yaml — 2.0+
+plugins:
+  d_rocket_lints: ^2.2.1
 ```
 
 ### Removed (from 1.x)

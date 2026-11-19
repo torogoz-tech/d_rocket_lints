@@ -5,7 +5,7 @@
 </p>
 
 Analyzer plugin rules for the
-[d_rocket 2.0](https://pub.dev/packages/d_rocket) framework.
+[d_rocket 2.2](https://pub.dev/packages/d_rocket) framework.
 
 Catches LINQ closures that would silently run in-memory
 instead of being translated to SQL, and N+1 navigation
@@ -16,15 +16,19 @@ fetches in loops.
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  d_rocket_lints: ^2.1.0
+  d_rocket_lints: ^2.2.1
 ```
 
 ```yaml
-# analysis_options.yaml
-analyzer:
-  plugins:
-    - d_rocket_lints
+# analysis_options.yaml at the package or workspace root
+plugins:
+  d_rocket_lints: ^2.2.1
 ```
+
+The plugin uses Dart's modern analyzer-plugin system. Do not place it under
+`analyzer.plugins`; that legacy configuration is deprecated in recent Dart
+SDKs and causes `analysis_options_deprecated_plugins` warnings. Restart the
+Dart Analysis Server after changing the top-level `plugins` section.
 
 ## Rules
 
@@ -44,11 +48,11 @@ API.
 
 ## Disabling a rule
 
-Use an `// ignore: <code>` directive on the offending line,
+Use an `// ignore: d_rocket_lints/<code>` directive on the offending line,
 or disable the rule globally with `analyzer.errors:`:
 
 ```dart
-// ignore: d_rocket_untranslated_closure_linq
+// ignore: d_rocket_lints/d_rocket_untranslated_closure_linq
 db.users.where((b) => b.name == 'alice').toList();
 ```
 
@@ -56,8 +60,8 @@ db.users.where((b) => b.name == 'alice').toList();
 # analysis_options.yaml — disable the rule entirely
 analyzer:
   errors:
-    d_rocket_untranslated_closure_linq: ignore
-    d_rocket_n_plus_one: ignore
+    d_rocket_lints/d_rocket_untranslated_closure_linq: ignore
+    d_rocket_lints/d_rocket_n_plus_one: ignore
 ```
 
 ## Severity
@@ -69,8 +73,8 @@ can promote them to `error` in their
 ```yaml
 analyzer:
   errors:
-    d_rocket_untranslated_closure_linq: error
-    d_rocket_n_plus_one: error
+    d_rocket_lints/d_rocket_untranslated_closure_linq: error
+    d_rocket_lints/d_rocket_n_plus_one: error
 ```
 
 ## Tests
