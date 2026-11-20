@@ -42,7 +42,7 @@ import 'src/lints/n_plus_one_lint.dart';
 ///
 /// ```yaml
 /// plugins:
-///   d_rocket_lints: ^2.2.1
+///   d_rocket_lints: ^2.2.2
 /// ```
 final DRocketLintsPlugin plugin = DRocketLintsPlugin();
 

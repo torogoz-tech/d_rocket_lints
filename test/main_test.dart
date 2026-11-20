@@ -23,6 +23,8 @@
 
 import 'package:analysis_server_plugin/plugin.dart';
 import 'package:analysis_server_plugin/registry.dart';
+import 'package:analyzer/src/analysis_rule/analysis_rule.dart';
+import 'package:analyzer/src/lint/config.dart';
 import 'package:d_rocket_lints/main.dart';
 import 'package:test/test.dart';
 
@@ -62,6 +64,10 @@ class _FakeRegistry implements PluginRegistry {
   final List<Object> lintRules = <Object>[];
   final List<Object> fixProducers = <Object>[];
   final List<Object> assistProducers = <Object>[];
+
+  @override
+  Iterable<AbstractAnalysisRule> enabled(Map<String, RuleConfig> ruleConfigs) =>
+      const <AbstractAnalysisRule>[];
 
   @override
   void registerWarningRule(Object rule) {

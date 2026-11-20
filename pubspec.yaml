@@ -1,6 +1,6 @@
 name: d_rocket_lints
 description: Static analysis rules for d_rocket that detect untranslated LINQ closures and N+1 navigation fetches before they reach production.
-version: 2.2.1
+version: 2.2.2
 
 repository: https://github.com/torogoz-tech/d_rocket_lints
 homepage: https://github.com/torogoz-tech/d_rocket_lints
@@ -33,29 +33,26 @@ platforms:
 # analyzer 9.0.0+). Bumps analyzer ^8.4.0
 # → ^9.0.0. The `dart analyze` command
 # auto-discovers this plugin via the top-level
-# `plugins: {d_rocket_lints: ^2.2.1}`
+# `plugins: {d_rocket_lints: ^2.2.2}`
 # section in the consumer's
 # `analysis_options.yaml`.
 dependencies:
-  d_rocket: ^2.2.1
-  # 2.0.0 — analyzer bumped 9.0.0 → 10.0.1
-  # in lockstep with analysis_server_plugin
-  # 0.3.4 → 0.3.9 (Phase 8.7). analyzer 10.0.2+
-  # requires meta 1.18.0 which conflicts with
-  # d_rocket's flutter SDK pin (meta 1.17.0).
-  analyzer: ^10.0.1
-  analyzer_plugin: ^0.14.0
-  analysis_server_plugin: ^0.3.7
+  d_rocket: ^2.2.2
+  # 2.2.2 — pinned Analyzer 13.0.0 in lockstep with
+  # analysis_server_plugin 0.3.15 and analyzer_plugin 0.14.9.
+  analyzer: 13.0.0
+  analyzer_plugin: 0.14.9
+  analysis_server_plugin: 0.3.15
 
 dev_dependencies:
-  # 2.0.0 — official testing utilities for
-  # analysis_server_plugin rules. ^0.1.7
-  # pairs with analyzer 10.0.1.
-  analyzer_testing: ^0.1.7
+  # 2.2.2 — official testing utilities for
+  # analysis_server_plugin rules. ^0.2.6 pairs
+  # with Analyzer 13.0.0.
+  analyzer_testing: ^0.2.6
   # 2.0.0 — `AnalysisRuleTest` extends
   # `PubPackageResolutionTest`, which uses
   # the reflective loader to discover
   # `test_*` methods on the test class.
   test_reflective_loader: ^0.2.0
   lints: ^6.0.0
-  test: ^1.30.0
+  test: ^1.31.2

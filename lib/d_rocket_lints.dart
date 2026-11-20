@@ -27,7 +27,7 @@
 /// * Activate via `analysis_options.yaml`:
 ///   ```yaml
 ///   plugins:
-///     d_rocket_lints: ^2.2.1
+///     d_rocket_lints: ^2.2.2
 ///   ```
 ///
 /// ## What stays the same

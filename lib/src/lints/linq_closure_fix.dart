@@ -85,9 +85,9 @@ class LinqClosureFix extends ResolvedCorrectionProducer {
   @override
   Future<void> compute(ChangeBuilder builder) async {
     final MethodInvocation invocation = node as MethodInvocation;
-    final NodeList<Expression> args = invocation.argumentList.arguments;
+    final NodeList<Argument> args = invocation.argumentList.arguments;
     if (args.isEmpty) return;
-    final Expression firstArg = args.first;
+    final Expression firstArg = args.first.argumentExpression;
     if (firstArg is! FunctionExpression) return;
 
     final String rewrite = buildRewriteText(firstArg);
@@ -163,34 +163,28 @@ class LinqClosureFix extends ResolvedCorrectionProducer {
       // or `Person p`). Anything more
       // exotic (optional, named, destructured)
       // gets a `/* TODO */` marker.
-      if (p is SimpleFormalParameter) {
-        final Token? nameTok = p.name;
-        final String? name = nameTok?.lexeme;
-        if (name == null) {
-          buf.write('/* TODO: handle non-named param */');
-        } else {
-          // Get the type name (if any) from
-          // the type annotation's source text.
-          // We use `toSource()` because
-          // `TypeAnnotation` is a sealed class
-          // in analyzer 9.0.0 (no `name` getter
-          // at the base level). The simple
-          // case `Person` is covered, and
-          // // complex cases like
-          // `List<Person>` are also preserved
-          // verbatim.
-          final TypeAnnotation? type = p.type;
-          final String? typeText = type?.toSource();
-          if (typeText != null && typeText.isNotEmpty) {
-            buf.write("Expr.param<$typeText>('$name')");
-          } else {
-            buf.write("Expr.param('$name')");
-          }
-        }
+      final Token? nameTok = p.name;
+      final String? name = nameTok?.lexeme;
+      if (name == null) {
+        buf.write('/* TODO: handle non-named param */');
       } else {
-        buf.write('/* TODO: handle '
-            '${p.runtimeType} '
-            'param */');
+        // Get the type name (if any) from
+        // the type annotation's source text.
+        // We use `toSource()` because
+        // `TypeAnnotation` is a sealed class
+        // in analyzer 9.0.0 (no `name` getter
+        // at the base level). The simple
+        // case `Person` is covered, and
+        // // complex cases like
+        // `List<Person>` are also preserved
+        // verbatim.
+        final TypeAnnotation? type = p.type;
+        final String? typeText = type?.toSource();
+        if (typeText != null && typeText.isNotEmpty) {
+          buf.write("Expr.param<$typeText>('$name')");
+        } else {
+          buf.write("Expr.param('$name')");
+        }
       }
     }
     buf.write(']');

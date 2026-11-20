@@ -52,12 +52,13 @@ const LintCode closureLinqCode = LintCode(
 /// `lib/main.dart`'s `DRocketLintsPlugin.register`.
 class LinqClosureRule extends AnalysisRule {
   LinqClosureRule()
-      : super(
-          name: 'd_rocket_untranslated_closure_linq',
-          description: 'Detects closure LINQ calls that run '
-              'in-memory only and should be rewritten with '
-              'Expr.lambda for SQL translation.',
-        );
+    : super(
+        name: 'd_rocket_untranslated_closure_linq',
+        description:
+            'Detects closure LINQ calls that run '
+            'in-memory only and should be rewritten with '
+            'Expr.lambda for SQL translation.',
+      );
 
   /// Convenience accessor so callers (like
   /// `main.dart`'s `registerFixForRule`)
@@ -107,9 +108,9 @@ class _LinqClosureVisitor extends SimpleAstVisitor<void> {
 
     // Only check calls whose first argument is a
     // function expression (a closure literal).
-    final NodeList<Expression> args = node.argumentList.arguments;
+    final NodeList<Argument> args = node.argumentList.arguments;
     if (args.isEmpty) return;
-    final Expression firstArg = args.first;
+    final Expression firstArg = args.first.argumentExpression;
     // FunctionExpression is the AST node for
     // `(x) => …` arrow-form closures and
     // `(x) { … }` block-form closures alike.

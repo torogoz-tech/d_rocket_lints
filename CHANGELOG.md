@@ -3,6 +3,15 @@
 All notable changes to `d_rocket_lints` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## [2.2.2] — 2026-11-20
+
+### Compatibility
+
+* Updated the analyzer-plugin toolchain to the Analyzer 13 family so
+  `d_rocket`, `d_rocket_builder` and the lint test suite can resolve together.
+* Updated the package's test constraint to `^1.31.2` and retained the modern
+  top-level analyzer plugin configuration.
+
 ## [2.2.1] — 2026-11-19
 
 ### Fixed

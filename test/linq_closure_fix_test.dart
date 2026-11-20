@@ -33,7 +33,9 @@ void main() {
         final src = 'void main() { q.where_((p) => true); }';
         final FunctionExpression closure = _parseClosure(src);
         expect(
-          LinqClosureFix.paramsToExprListText(closure.parameters?.parameters ?? const <FormalParameter>[]),
+          LinqClosureFix.paramsToExprListText(
+            closure.parameters?.parameters ?? const <FormalParameter>[],
+          ),
           equals("[Expr.param('p')]"),
         );
       });
@@ -42,7 +44,9 @@ void main() {
         final src = 'void main() { q.where_((p, q) => true); }';
         final FunctionExpression closure = _parseClosure(src);
         expect(
-          LinqClosureFix.paramsToExprListText(closure.parameters?.parameters ?? const <FormalParameter>[]),
+          LinqClosureFix.paramsToExprListText(
+            closure.parameters?.parameters ?? const <FormalParameter>[],
+          ),
           equals("[Expr.param('p'), Expr.param('q')]"),
         );
       });
@@ -54,7 +58,9 @@ void main() { q.where_((Person p) => p.age > 18); }
 ''';
         final FunctionExpression closure = _parseClosure(src);
         expect(
-          LinqClosureFix.paramsToExprListText(closure.parameters?.parameters ?? const <FormalParameter>[]),
+          LinqClosureFix.paramsToExprListText(
+            closure.parameters?.parameters ?? const <FormalParameter>[],
+          ),
           equals("[Expr.param<Person>('p')]"),
         );
       });
@@ -67,7 +73,9 @@ void main() { q.where_((Person p, Order o) => true); }
 ''';
         final FunctionExpression closure = _parseClosure(src);
         expect(
-          LinqClosureFix.paramsToExprListText(closure.parameters?.parameters ?? const <FormalParameter>[]),
+          LinqClosureFix.paramsToExprListText(
+            closure.parameters?.parameters ?? const <FormalParameter>[],
+          ),
           equals("[Expr.param<Person>('p'), Expr.param<Order>('o')]"),
         );
       });
@@ -76,7 +84,9 @@ void main() { q.where_((Person p, Order o) => true); }
         final src = 'void main() { q.where_(() => true); }';
         final FunctionExpression closure = _parseClosure(src);
         expect(
-          LinqClosureFix.paramsToExprListText(closure.parameters?.parameters ?? const <FormalParameter>[]),
+          LinqClosureFix.paramsToExprListText(
+            closure.parameters?.parameters ?? const <FormalParameter>[],
+          ),
           equals('[]'),
         );
       });
@@ -129,16 +139,19 @@ FunctionExpression _parseClosure(String src) {
     throwIfDiagnostics: false,
   ).unit;
   MethodInvocation? invocation;
-  unit.accept(_InvocationFinder((MethodInvocation m) {
-    if (invocation != null) {
-      throw StateError('test source contains multiple invocations');
-    }
-    invocation = m;
-  }));
+  unit.accept(
+    _InvocationFinder((MethodInvocation m) {
+      if (invocation != null) {
+        throw StateError('test source contains multiple invocations');
+      }
+      invocation = m;
+    }),
+  );
   if (invocation == null) {
     throw StateError('test source contains no MethodInvocation');
   }
-  final Expression firstArg = invocation!.argumentList.arguments.first;
+  final Expression firstArg =
+      invocation!.argumentList.arguments.first.argumentExpression;
   if (firstArg is! FunctionExpression) {
     throw StateError(
       'test source first arg is not a FunctionExpression: $firstArg',

@@ -16,13 +16,13 @@ fetches in loops.
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  d_rocket_lints: ^2.2.1
+  d_rocket_lints: ^2.2.2
 ```
 
 ```yaml
 # analysis_options.yaml at the package or workspace root
 plugins:
-  d_rocket_lints: ^2.2.1
+  d_rocket_lints: ^2.2.2
 ```
 
 The plugin uses Dart's modern analyzer-plugin system. Do not place it under
