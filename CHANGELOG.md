@@ -3,6 +3,13 @@
 All notable changes to `d_rocket_lints` are documented here.
 The format follows [Keep a Changelog](https://keepachangelog.com).
 
+## [2.3.0] — 2026-11-21
+
+### Added
+
+* Added `d_rocket_enum_like_string`, which warns when a `String` field uses a
+  fixed alternation `@Pattern` that should be modeled as a Dart enum.
+
 ## [2.2.2] — 2026-11-20
 
 ### Compatibility

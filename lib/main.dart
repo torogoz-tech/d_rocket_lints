@@ -5,7 +5,7 @@
 /// this file by finding the `plugin`
 /// top-level variable (which it imports and
 /// reads at startup). The plugin then
-/// registers both lint rules via
+/// registers the lint rules via
 /// `register(PluginRegistry)`.
 ///
 /// ## History
@@ -30,6 +30,7 @@ import 'package:analysis_server_plugin/registry.dart';
 import 'src/lints/linq_closure_fix.dart';
 import 'src/lints/linq_closure_lint.dart';
 import 'src/lints/n_plus_one_lint.dart';
+import 'src/lints/enum_like_pattern_lint.dart';
 
 /// The top-level plugin instance. The analysis
 /// server auto-discovers this variable by
@@ -42,17 +43,18 @@ import 'src/lints/n_plus_one_lint.dart';
 ///
 /// ```yaml
 /// plugins:
-///   d_rocket_lints: ^2.2.2
+///   d_rocket_lints: ^2.3.0
 /// ```
 final DRocketLintsPlugin plugin = DRocketLintsPlugin();
 
 /// The d_rocket analyzer plugin. Registers
-/// both lint rules and one IDE quick-fix:
+/// three lint rules and one IDE quick-fix:
 ///
 /// * [LinqClosureRule] — `d_rocket_untranslated_closure_linq`
 ///   with associated [LinqClosureFix]
 ///   ("Rewrite with Expr.lambda")
 /// * [NPlusOneRule] — `d_rocket_n_plus_one`
+/// * [EnumLikePatternRule] — `d_rocket_enum_like_string`
 ///   (no fix yet; the fix is structural —
 ///   add `.include_<T>()` at the call site —
 ///   which is too risky to auto-apply)
@@ -72,10 +74,8 @@ class DRocketLintsPlugin extends Plugin {
     // via the `.new` constructor reference
     // (because each diagnostic gets its own
     // short-lived producer).
-    registry.registerFixForRule(
-      LinqClosureRule.code,
-      LinqClosureFix.new,
-    );
+    registry.registerFixForRule(LinqClosureRule.code, LinqClosureFix.new);
     registry.registerWarningRule(NPlusOneRule());
+    registry.registerWarningRule(EnumLikePatternRule());
   }
 }

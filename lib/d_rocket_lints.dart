@@ -27,7 +27,7 @@
 /// * Activate via `analysis_options.yaml`:
 ///   ```yaml
 ///   plugins:
-///     d_rocket_lints: ^2.2.2
+///     d_rocket_lints: ^2.3.0
 ///   ```
 ///
 /// ## What stays the same
@@ -47,8 +47,11 @@ export 'src/lints/linq_closure_lint.dart'
         LinqClosureRule;
 export 'src/lints/linq_closure_fix.dart' show LinqClosureFix;
 export 'src/lints/n_plus_one_lint.dart'
-    show NPlusOneLint, // = NPlusOneRule (typedef)
-    NPlusOneRule;
+    show
+        NPlusOneLint, // = NPlusOneRule (typedef)
+        NPlusOneRule;
+export 'src/lints/enum_like_pattern_lint.dart'
+    show EnumLikePatternRule, enumLikePatternCode;
 // The Plugin entry point lives at
 // `package:d_rocket_lints/main.dart` (the
 // analysis server reads that file, not this

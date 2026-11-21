@@ -38,10 +38,10 @@ void main() {
       expect(plugin.name, equals('d_rocket_lints'));
     });
 
-    test('register() registers both rules + one fix', () {
+    test('register() registers all rules + one fix', () {
       final _FakeRegistry registry = _FakeRegistry();
       plugin.register(registry);
-      expect(registry.warningRules, hasLength(2));
+      expect(registry.warningRules, hasLength(3));
       // We also register one quick-fix
       // (Rewrite with Expr.lambda for the
       // closure rule). The N+1 rule has no

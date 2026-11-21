@@ -5,7 +5,7 @@
 </p>
 
 Analyzer plugin rules for the
-[d_rocket 2.2](https://pub.dev/packages/d_rocket) framework.
+[d_rocket 2.3](https://pub.dev/packages/d_rocket) framework.
 
 Catches LINQ closures that would silently run in-memory
 instead of being translated to SQL, and N+1 navigation
@@ -16,13 +16,13 @@ fetches in loops.
 ```yaml
 # pubspec.yaml
 dev_dependencies:
-  d_rocket_lints: ^2.2.2
+  d_rocket_lints: ^2.3.0
 ```
 
 ```yaml
 # analysis_options.yaml at the package or workspace root
 plugins:
-  d_rocket_lints: ^2.2.2
+  d_rocket_lints: ^2.3.0
 ```
 
 The plugin uses Dart's modern analyzer-plugin system. Do not place it under
@@ -39,6 +39,7 @@ The two rules are exposed by their diagnostic code
 |---|---|---|
 | `d_rocket_untranslated_closure_linq` | LINQ predicates like `dbSet.where((b) => b.x == 1)` that evaluate **in-memory only** (silent correctness footgun — works locally, returns wrong data against SQL Server / Postgres / etc.) | Wrap the closure in `Expr.lambda(...)` so the provider can translate it to SQL. `dart fix` applies the change automatically. |
 | `d_rocket_n_plus_one` | `for (final r in dbSet.where_(...))` followed by a navigation access (`r.user`) that triggers a per-row fetch. | Use `include_<Target>()` (the codegen helper) to do a single `IN (...)` query. |
+| `d_rocket_enum_like_string` | A `String` field uses an exact alternation `@Pattern`, such as `^(available|pending|timeout)$`. | Declare a Dart enum and use it as the field type. |
 
 The class names `LinqClosureRule` and `NPlusOneRule` (and the
 1.x typedefs `LinqClosureLint` / `NPlusOneLint`) are still
@@ -62,6 +63,7 @@ analyzer:
   errors:
     d_rocket_lints/d_rocket_untranslated_closure_linq: ignore
     d_rocket_lints/d_rocket_n_plus_one: ignore
+    d_rocket_lints/d_rocket_enum_like_string: ignore
 ```
 
 ## Severity
@@ -75,12 +77,14 @@ analyzer:
   errors:
     d_rocket_lints/d_rocket_untranslated_closure_linq: error
     d_rocket_lints/d_rocket_n_plus_one: error
+    d_rocket_lints/d_rocket_enum_like_string: error
 ```
 
 ## Tests
 
-14 tests across 5 files. Coverage is golden-file based
-(uses `package:analyzer`'s test utilities).
+17 tests across 6 files. Coverage uses
+`package:analyzer`'s test utilities and
+golden-style diagnostic assertions.
 
 ```bash
 dart test
